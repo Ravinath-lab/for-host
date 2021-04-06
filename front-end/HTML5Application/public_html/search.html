@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>Search</title>
+        <link  rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" type="text/css"/>
+        <link href="css/style.css" rel="stylesheet">
+
+        
+      
+       
+    </head>
+<body>
+      
+    <header>
+        <div class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-caption">
+                            <h1 class="page-title">WIKI NOIZE</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+<div style="padding: 50px; border-radius: 10px; background-color: rgb(226, 226, 226); height: 100vh;width: 80%;margin: 20px auto;">
+
+    <h3 style="text-decoration: underline; margin-left: 20px; text-transform: uppercase"><b>Search here</b></h3>
+    <br>
+    <div class="col-md-6 " >
+
+        <div class="input-group mb-3" >
+            <input id="searchtext"  type="text" class="form-control" placeholder="Search Keyword" aria-label="Recipient's username" aria-describedby="button-addon2">&nbsp;
+            
+        </div>
+        
+    </div>
+
+    <div id="cardholder" class="col-md-8 p-3 mb-5 bg-body rounded">
+
+
+    </div>
+   
+   
+</div>
+<footer style="padding: 20px 0;" class="py-4" >
+    
+    <div class="container text-center">
+        <small>Copyright 2021 &copy; by Team Noizes.All rights reserved</small>
+        <br />
+        
+    </div>
+    
+
+</footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script> 
+        <script src="https://code.jquery.com/jquery-3.6.0.js" crossorigin="anonymous"></script>
+        <script >
+            
+            
+            var ip="104.198.28.198:8080";
+            
+            
+            $(document).ready(function () {
+                
+               
+                
+                
+                $("#searchtext").keyup(function (e) {
+
+                 search();
+
+
+                });
+
+
+                    function search(){
+                       var serchkey = $("#searchtext").val();
+                    if(serchkey!=''){
+                               $.ajax({
+                        
+                        url: 'http://'+ip+'/userKeyword/getAllByNames/' + serchkey,
+                        type: "get",
+                        dataType: 'json',
+
+                        error: function (error) {
+                            alert(error);
+
+                        },
+                        success: function (r) {
+                            $("#cardholder").empty();
+                            for (var item in r) {
+                               
+                                var card = $('<div class="card">\n\
+                                           <div class="card-header">\n\
+                                           '+r[item].name+'</div><div class="card-body">\n\
+                                           <blockquote class="blockquote mb-0">\n\
+                                           <p>'+r[item].description+'</p>\n\
+                                           \n\
+                                           </blockquote>\n\
+                                           </div>\n\
+                                           </div>'
+
+                                        );
+                                $("#cardholder").append(card);
+                            }
+
+
+                        }
+                    });
+                        }else{
+                             $("#cardholder").empty();
+                        }
+                 
+                }
+                
+            });
+
+
+
+
+        </script>
+
+    </body>
+</html>
